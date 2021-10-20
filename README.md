@@ -12,7 +12,7 @@ cdk deploy
 
 ## Test
 
-After deployment go to https://studio.apollographql.com/sandbox/explorer and set the endpoint to the one given `FederatedAppsyncApiDemoStack.FederationGatewayfederationapiEndpoint` output of `cdk deploy` command.
+After deployment go to https://studio.apollographql.com/sandbox/explorer and set the endpoint to the one given `FederatedAppsyncApiDemoStack.FederationGatewayApiEndpoint` output of `cdk deploy` command.
 
 ## Destroy
 
