@@ -14,7 +14,7 @@ export class ApolloBasedService extends cdk.Construct {
 
     //  Service hosted by an Apollo server running on AWS Lambda
     const apolloServer = new lambda.NodejsFunction(this, `${props.serviceName}-ApolloServer`, {
-      entry: join(__dirname, `${props.serviceName}.ts`),
+      entry: join(__dirname, `${props.serviceName}.Server.ts`),
       timeout: cdk.Duration.seconds(30),
       handler: 'graphqlHandler',
     });

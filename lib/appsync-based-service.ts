@@ -28,7 +28,7 @@ export class AppSyncBasedService extends cdk.Construct {
     const lambdaResolver = new lambda.NodejsFunction(this, 'lambdaResolver', {
       entry: join(__dirname, `${props.serviceName}-resolver.ts`),
       environment: {
-        SCHEMA: api.schema.definition,
+        SCHEMA: api.schema.definition.replace('__typename: String!', ''),
       },
     });
 
