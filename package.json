@@ -1,0 +1,35 @@
+{
+  "name": "federated-appsync-api-demo",
+  "version": "0.1.0",
+  "bin": {
+    "federated-appsync-api-demo": "bin/federated-appsync-api-demo.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk"
+  },
+  "devDependencies": {
+    "@aws-cdk/assert": "^1.128.0",
+    "@types/jest": "^26.0.10",
+    "@types/node": "10.17.27",
+    "aws-cdk": "^1.128.0",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.2.0",
+    "ts-node": "^9.0.0",
+    "typescript": "~3.9.7"
+  },
+  "dependencies": {
+    "@apollo/federation": "^0.33.3",
+    "@apollo/gateway": "^0.42.3",
+    "@aws-cdk/aws-apigateway": "^1.128.0",
+    "@aws-cdk/aws-appsync": "^1.128.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.128.0",
+    "@aws-cdk/core": "^1.128.0",
+    "apollo-server": "3.3.0",
+    "apollo-server-lambda": "3.3.0",
+    "esbuild": "^0.13.8",
+    "source-map-support": "^0.5.16"
+  }
+}
