@@ -1,10 +1,15 @@
+import * as AWSXray from "aws-xray-sdk-core";
+AWSXray.captureHTTPsGlobal(require("https"), false)
+AWSXray.captureHTTPsGlobal(require("http"), false)
 import { ApolloServer } from 'apollo-server-lambda';
 import { ApolloGateway, RemoteGraphQLDataSource } from '@apollo/gateway';
+
 
 class AuthenticatedDataSource extends RemoteGraphQLDataSource {
   willSendRequest({ request }: any) {
     // Pass the user's id from the context to each subgraph
     // as a header called `user-id`
+    request.http.headers.set('x-api-key', process.env.API_KEY);
     request.http.headers.set('x-api-key', process.env.API_KEY);
   }
 }
@@ -24,4 +29,4 @@ const server = new ApolloServer({
   debug: true,
 });
 
-exports.graphqlHandler = server.createHandler();
+exports.handler = server.createHandler();

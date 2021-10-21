@@ -1,5 +1,6 @@
 import * as cdk from '@aws-cdk/core';
 import * as lambda from '@aws-cdk/aws-lambda-nodejs';
+import {Tracing} from '@aws-cdk/aws-lambda';
 import * as apigateway from '@aws-cdk/aws-apigateway';
 import { join } from 'path';
 
@@ -13,18 +14,21 @@ export class ApolloBasedService extends cdk.Construct {
     super(scope, id);
 
     //  Service hosted by an Apollo server running on AWS Lambda
-    const apolloServer = new lambda.NodejsFunction(this, `${props.serviceName}-ApolloServer`, {
+    const apolloServer = new lambda.NodejsFunction(this, `ApolloServer`, {
       entry: join(__dirname, `${props.serviceName}.Server.ts`),
       timeout: cdk.Duration.seconds(30),
-      handler: 'graphqlHandler',
+      tracing: Tracing.ACTIVE,
     });
 
-    const grapqhQLApi = new apigateway.RestApi(this, `${props.serviceName}-Api`, {
+    const grapqhQLApi = new apigateway.RestApi(this, `Api`, {
       restApiName: `${props.serviceName} graphql endpoint`,
       description: `This service serves ${props.serviceName} data through apollo graphql`,
       defaultCorsPreflightOptions: {
         allowOrigins: apigateway.Cors.ALL_ORIGINS,
         allowMethods: apigateway.Cors.ALL_METHODS // this is also the default
+      },
+      deployOptions: {
+        tracingEnabled: true,
       }
     });
 

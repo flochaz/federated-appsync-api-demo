@@ -1,6 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import { ServiceEndpointDefinition } from '@apollo/gateway';
 import * as lambda from '@aws-cdk/aws-lambda-nodejs';
+import {Tracing} from '@aws-cdk/aws-lambda';
 import * as apigateway from '@aws-cdk/aws-apigateway';
 
 export interface ApolloFederationGatewayProps {
@@ -19,12 +20,15 @@ export class ApolloFederationGateway extends cdk.Construct {
         API_KEY: props.apiKey,
       },
       timeout: cdk.Duration.seconds(30),
-      handler: 'graphqlHandler',
+      tracing: Tracing.ACTIVE,
     });
 
-    const grapqhQLApi = new apigateway.RestApi(this, `federation-api`, {
+    const grapqhQLApi = new apigateway.RestApi(this, `Api`, {
       restApiName: "Federation gateway graphql endpoint",
       description: "This service serves composite graphs data through apollo graphql.",
+      deployOptions: {
+        tracingEnabled: true,
+      }
     });
     
 

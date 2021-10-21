@@ -1,6 +1,8 @@
 import * as cdk from '@aws-cdk/core';
 import * as appsync from '@aws-cdk/aws-appsync';
 import * as lambda from '@aws-cdk/aws-lambda-nodejs';
+import {Tracing} from '@aws-cdk/aws-lambda';
+
 import { join } from 'path';
 
 export interface AppSyncBasedServiceProps {
@@ -30,6 +32,7 @@ export class AppSyncBasedService extends cdk.Construct {
       environment: {
         SCHEMA: api.schema.definition.replace('__typename: String!', ''),
       },
+      tracing: Tracing.ACTIVE,
     });
 
     const lambdaDS = api.addLambdaDataSource('LambdaDS', lambdaResolver);
@@ -56,5 +59,9 @@ export class AppSyncBasedService extends cdk.Construct {
 
     this.graphQLApiEndpoint = api.graphqlUrl;
     this.apiKey = api.apiKey!;
+
+    new cdk.CfnOutput(this, "ApiEndpoint", {
+      value: api.graphqlUrl,
+    })
   }
 }

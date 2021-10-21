@@ -1,7 +1,6 @@
 import { ApolloServer, gql } from 'apollo-server-lambda';
 import { buildSubgraphSchema } from '@apollo/federation';
 
-
 const loggerPlugin = {
   // Fires whenever a GraphQL request is received from a client.
   async requestDidStart(requestContext: any) {
@@ -96,4 +95,4 @@ const server = new ApolloServer({
 });
 
 
-exports.graphqlHandler = server.createHandler();
+exports.handler = server.createHandler();

@@ -29,6 +29,7 @@
     "@aws-cdk/core": "^1.128.0",
     "apollo-server": "3.3.0",
     "apollo-server-lambda": "3.3.0",
+    "aws-xray-sdk": "^3.3.3",
     "esbuild": "^0.13.8",
     "source-map-support": "^0.5.16"
   }
