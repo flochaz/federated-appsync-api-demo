@@ -1,13 +1,14 @@
-import { expect as expectCDK, matchTemplate, MatchStyle } from '@aws-cdk/assert';
-import * as cdk from '@aws-cdk/core';
+import { Template } from 'aws-cdk-lib/assertions';
+import * as core from 'aws-cdk-lib';
 import * as FederatedAppsyncApiDemo from '../lib/federated-appsync-api-demo-stack';
 
 test('Empty Stack', () => {
-    const app = new cdk.App();
+    const app = new core.App();
     // WHEN
     const stack = new FederatedAppsyncApiDemo.FederatedAppsyncApiDemoStack(app, 'MyTestStack');
     // THEN
-    expectCDK(stack).to(matchTemplate({
-      "Resources": {}
-    }, MatchStyle.EXACT))
+    // 2 apollo based services behind API gateway and the federated gateway
+    Template.fromStack(stack).hasResource('AWS::ApiGateway::RestApi', 3);
+        // 1 AppSync based service
+    Template.fromStack(stack).hasResource('AWS::AppSync::GraphQLApi', 1);
 });

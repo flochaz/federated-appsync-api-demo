@@ -1,7 +1,8 @@
-import * as cdk from '@aws-cdk/core';
-import * as appsync from '@aws-cdk/aws-appsync';
-import * as lambda from '@aws-cdk/aws-lambda-nodejs';
-import {Tracing} from '@aws-cdk/aws-lambda';
+import * as core from 'aws-cdk-lib';
+import { Construct } from 'constructs';
+import * as appsync from '@aws-cdk/aws-appsync-alpha';
+import * as lambda from 'aws-cdk-lib/aws-lambda-nodejs';
+import { Tracing } from 'aws-cdk-lib/aws-lambda';
 
 import { join } from 'path';
 
@@ -9,11 +10,11 @@ export interface AppSyncBasedServiceProps {
   readonly serviceName: string;
 }
 
-export class AppSyncBasedService extends cdk.Construct {
+export class AppSyncBasedService extends Construct {
   readonly graphQLApiEndpoint: string;
   readonly apiKey: string;
 
-  constructor(scope: cdk.Construct, id: string, props: AppSyncBasedServiceProps) {
+  constructor(scope: Construct, id: string, props: AppSyncBasedServiceProps) {
     super(scope, id);
 
     const api = new appsync.GraphqlApi(this, 'Api', {
@@ -22,6 +23,9 @@ export class AppSyncBasedService extends cdk.Construct {
       authorizationConfig: {
         defaultAuthorization: {
           authorizationType: appsync.AuthorizationType.API_KEY,
+          apiKeyConfig: {
+            expires: core.Expiration.after(core.Duration.days(364)),
+          },
         },
       },
       xrayEnabled: true,
@@ -50,18 +54,19 @@ export class AppSyncBasedService extends cdk.Construct {
     // TODO infer from schema
     lambdaDS.createResolver({
       typeName: 'Query',
-      fieldName: 'product'});
+      fieldName: 'product',
+    });
 
     lambdaDS.createResolver({
       typeName: 'Product',
-      fieldName: 'createdBy'
+      fieldName: 'createdBy',
     });
 
     this.graphQLApiEndpoint = api.graphqlUrl;
     this.apiKey = api.apiKey!;
 
-    new cdk.CfnOutput(this, "ApiEndpoint", {
+    new core.CfnOutput(this, 'ApiEndpoint', {
       value: api.graphqlUrl,
-    })
+    });
   }
 }

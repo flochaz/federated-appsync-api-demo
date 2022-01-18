@@ -1,10 +1,11 @@
-import * as cdk from '@aws-cdk/core';
+import * as core from 'aws-cdk-lib';
+import { Construct } from 'constructs';
 import { ApolloBasedService } from './apollo-based-graphql-service';
 import { ApolloFederationGateway } from './apollo-federation-gateway';
 import { AppSyncBasedService } from './appsync-based-service';
 
-export class FederatedAppsyncApiDemoStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+export class FederatedAppsyncApiDemoStack extends core.Stack {
+  constructor(scope: Construct, id: string, props?: core.StackProps) {
     super(scope, id, props);
 
     const usersService = new ApolloBasedService(this, 'UsersService', {
@@ -15,7 +16,7 @@ export class FederatedAppsyncApiDemoStack extends cdk.Stack {
       serviceName: 'reviews-service',
     });
 
-    const productsService = new AppSyncBasedService (this, 'ProductsService', {
+    const productsService = new AppSyncBasedService(this, 'ProductsService', {
       serviceName: 'products-service',
     });
 
@@ -32,10 +33,9 @@ export class FederatedAppsyncApiDemoStack extends cdk.Stack {
         {
           name: 'Product',
           url: productsService.graphQLApiEndpoint,
-        }
+        },
       ],
-    apiKey:  productsService.apiKey,
+      apiKey: productsService.apiKey,
     });
-    
   }
 }
