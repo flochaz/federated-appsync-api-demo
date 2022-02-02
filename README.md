@@ -1,6 +1,8 @@
 # Demonstration of AWS AppSync API in a federated graphQL setup
 
-This is a project built with CDK for demo purpose and is not meant for production use.
+:information_source: Related blog post : https://aws.amazon.com/blogs/mobile/federation-appsync-subgraph/
+
+:warning: *This is a project built for demo purpose and is not meant for production use.*
 
 # TL;DR;
 
@@ -25,6 +27,8 @@ cdk deploy
 # Details
 
 This repo shows we how you can mix subgraphs served by an Apollo Server and an AWS AppSync (https://aws.amazon.com/appsync/) managed one.
+
+Check the [official blog post](https://aws.amazon.com/blogs/mobile/federation-appsync-subgraph/) for more details.
 
 The global graph looks like this:
 
