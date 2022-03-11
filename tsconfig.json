@@ -12,6 +12,7 @@
     "noImplicitThis": true,
     "alwaysStrict": true,
     "noUnusedLocals": false,
+    "skipLibCheck": true,
     "noUnusedParameters": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": false,
