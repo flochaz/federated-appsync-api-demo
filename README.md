@@ -11,7 +11,8 @@
 ```
 npm ci
 npm run build
-cdk deploy
+npm run cdk bootstrap
+npm run cdk deploy
 ```
 
 ## Test
@@ -21,7 +22,7 @@ After deployment go to https://studio.apollographql.com/sandbox/explorer and set
 ## Destroy
 
 ```
-cdk deploy
+cdk destroy
 ```
 
 # Details
@@ -57,6 +58,7 @@ PS: The entire setup is delivered as a CDK app to simplify deployments but all A
 In order to deploy the demonstrator, you will need the following prerequisites:
 
 * An active AWS account
+* Node 16 or above
 * The AWS CDK
 * git client
 
@@ -67,6 +69,7 @@ To deploy the demonstrator run the following
 ```
 git clone https://github.com/flochaz/federated-appsync-api-demo
 cd federated-appsync-api-demo
+npm run cdk bootstrap
 npm run cdk deploy
 ```
 
